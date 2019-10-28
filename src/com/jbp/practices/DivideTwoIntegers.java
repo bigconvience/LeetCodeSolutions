@@ -1,4 +1,4 @@
-package com.jbp.leetcode;
+package com.jbp.practices;
 
 /**
  * Created by jiangbenpeng on 01/06/2017.

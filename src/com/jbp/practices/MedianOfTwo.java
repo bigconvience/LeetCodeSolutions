@@ -1,4 +1,4 @@
-package com.jbp.leetcode;
+package com.jbp.practices;
 
 /**
  * https://zhuanlan.zhihu.com/p/55666669

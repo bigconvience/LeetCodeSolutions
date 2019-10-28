@@ -1,4 +1,4 @@
-package com.jbp.leetcode;
+package com.jbp.practices;
 
 /**
  * Created by jiangbenpeng on 01/06/2017.
@@ -6,11 +6,11 @@ package com.jbp.leetcode;
  * @author benpeng.jiang
  * @version 1.0.0
  */
-public class SearchSortedArrayII {
+public class SearchSortedArray {
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3, 1, 1, 1, 1};
-//        int[] nums = {5};
-        System.out.println("index: " + new SearchSortedArrayII().search(nums, 3));
+//        int[] nums = {4, 5, 6, 7, 0, 1, 2};
+        int[] nums = {5};
+        System.out.println("index: " + new SearchSortedArray().search(nums, 5));
     }
 
     public int search(int[] nums, int target) {
@@ -31,14 +31,12 @@ public class SearchSortedArrayII {
                 } else {
                     start = mid;
                 }
-            } else if (nums[start] > nums[mid]){
+            } else {
                 if (nums[mid] < target && target <= nums[end]) {
                     start = mid;
                 } else {
                     end = mid;
                 }
-            } else {
-                start++;
             }
             mid = (start + end) / 2;
         }

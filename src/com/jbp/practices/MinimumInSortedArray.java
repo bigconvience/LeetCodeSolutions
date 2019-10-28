@@ -1,4 +1,4 @@
-package com.jbp.leetcode;
+package com.jbp.practices;
 
 /**
  * Created by jiangbenpeng on 01/06/2017.
@@ -6,11 +6,11 @@ package com.jbp.leetcode;
  * @author benpeng.jiang
  * @version 1.0.0
  */
-public class MinimumInSortedArrayII {
+public class MinimumInSortedArray {
     public static void main(String[] args) {
-//        int[] nums = {1, 2, 3, 1, 1, 1, 1};
-        int[] nums = {3, 3, 1};
-        MinimumInSortedArrayII maxProduct = new MinimumInSortedArrayII();
+        int[] nums = {4, 6, 7, 0, 1, 2};
+//        int[] nums = {0, 2};
+        MinimumInSortedArray maxProduct = new MinimumInSortedArray();
         System.out.println(maxProduct.findMin(nums));
 
     }
@@ -22,10 +22,8 @@ public class MinimumInSortedArrayII {
         while (start + 1 < end) {
             if (nums[mid] < nums[end]) {
                 end = mid;
-            } else if (nums[mid] > nums[end]) {
-                start = mid;
             } else {
-                end--;
+                start = mid;
             }
             mid = (start + end) / 2;
         }
