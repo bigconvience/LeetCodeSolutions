@@ -8,40 +8,26 @@ package com.jbp.practices;
  */
 public class DivideTwoIntegers {
     public static void main(String[] args) {
-        System.out.println(new DivideTwoIntegers().divide(Integer.MIN_VALUE, 2));
+//        int[] nums = {1, 1, 2};
+        int[] nums = {0,0,1,1,1,2,2,3,3,4};
+        System.out.println(new DivideTwoIntegers().removeDuplicates(nums));
     }
 
-    public int divide(int dividend, int divisor) {
-        if (divisor == 0 || (divisor == -1 && dividend == Integer.MIN_VALUE)) {
-            return Integer.MAX_VALUE;
+    public int removeDuplicates(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return 1;
         }
 
-        if (divisor == 1) {
-            return dividend;
-        }
-
-        long tmpDvd = Math.abs((long)dividend);
-        long tmpDvr = Math.abs((long)divisor);
-        int sign = (dividend < 0) ^ (divisor < 0) ? -1 : 1;
-
-        int result = 0;
-
-
-        while (tmpDvd >= tmpDvr) {
-            int shiftNums = 0;
-
-            while (tmpDvd >= (tmpDvr << shiftNums)) {
-                shiftNums++;
+        int pre = 0;
+        for (int cur = 1; cur < nums.length; cur++) {
+            if (nums[pre] != nums[cur]) {
+                nums[++pre] = nums[cur];
             }
-
-            result += (1 << (shiftNums - 1));
-            tmpDvd -= (tmpDvr << (shiftNums -1));
         }
-
-        if (sign == 1) {
-            return result;
-        } else {
-            return -result;
-        }
+        return pre + 1;
     }
 }
+
