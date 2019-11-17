@@ -14,20 +14,17 @@ public class DivideTwoIntegers {
     }
 
     public int removeDuplicates(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        if (nums.length == 1) {
-            return 1;
+        if (nums.length <= 2) {
+            return nums.length;
         }
 
-        int pre = 0;
-        for (int cur = 1; cur < nums.length; cur++) {
-            if (nums[pre] != nums[cur]) {
-                nums[++pre] = nums[cur];
+        int index = 2;
+        for(int i = 2; i < nums.length; i++) {
+            if (nums[index - 2] != nums[i]) {
+                nums[index++] = nums[i];
             }
         }
-        return pre + 1;
+        return index;
     }
 }
 
