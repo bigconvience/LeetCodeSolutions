@@ -10,7 +10,17 @@ public class DuplicateNumber {
     public static void main(String[] args) {
         int[] str =  {1, 2, 3, 4, 5, 6, 4};
         Solution answer = new Solution();
-        System.out.println(answer.findDuplicate(str));
+
+        int a = 10;
+        boolean b = true;
+        boolean c = false;
+
+        if (a == 9 ||
+                b && c ) {
+            System.out.println("a");
+        } else {
+            System.out.println("b");
+        }
     }
 
     static class Solution {
