@@ -25,13 +25,57 @@ public class ListNodes {
 
 //        partition(listNode1, 3);
 
-        ListUtils.printList(reverseKGroup1(listNode1, 2));
+        reorderList(listNode1);
     }
 
 
-    public void reorderList(ListNode head) {
+    public static void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
+            return;
+        }
 
+        ListNode fast, slow;
+        fast = slow = head;
+        ListNode prev = head;
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        prev.next = null;
+        slow = reverse(slow);
+
+        ListNode cur = head;
+
+        while (cur.next != null) {
+            ListNode tmp = cur.next;
+            cur.next = slow;
+            slow = slow.next;
+            cur.next.next = tmp;
+            cur = tmp;
+        }
+
+        cur.next = slow;
+        ListUtils.printList(head);
     }
+
+    public static ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode cur, prev;
+        cur = head;
+        prev = null;
+        while (cur != null) {
+            ListNode tmp = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = tmp;
+        }
+
+        return prev;
+    }
+
 
     public ListNode detectCycle(ListNode head) {
         ListNode slow, fast, slow1;
