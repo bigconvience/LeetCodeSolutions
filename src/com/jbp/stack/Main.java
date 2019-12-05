@@ -1,50 +1,41 @@
 package com.jbp.stack;
 
-import java.util.Stack;
+import java.util.HashSet;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
         String a = "[[]]}";
-        System.out.println(isValid(a));
+        int[] height = {2, 1, 5, 6, 2, 3};
+        System.out.println(largestRectangleArea(height));
+
+        int[] height1 = {1};
+        System.out.println(largestRectangleArea(height1));
+
     }
 
-    public static boolean isValid(String s) {
-        if (s == null) {
-            return false;
-        } else if (s.isEmpty()) {
-            return true;
+    public static int largestRectangleArea(int[] heights) {
+        HashSet<Integer> hashSet = new HashSet<>();
+        for (int i = 0; i < heights.length; i++) {
+            hashSet.add(heights[i]);
         }
 
-        Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char chr = s.charAt(i);
-            if (stack.isEmpty()) {
-                if (chr == '('
-                        || chr == '['
-                        || chr == '{') {
-                    stack.push(chr);
+        int result  = 0;
+        for (Integer height: hashSet) {
+            int maxRange = 0;
+            int length = 0;
+            for (int i = 0; i < heights.length; i++) {
+                if (heights[i] >= height) {
+                    length++;
                 } else {
-                    return false;
+                    maxRange = Math.max(maxRange, length);
+                    length = 0;
                 }
-            } else {
-                char top = stack.peek();
-                if (chr == ')' || chr == '}' || chr == ']') {
-                    if ((top == '(' && chr == ')')
-                            || (top == '[' && chr == ']')
-                            || (top == '{' && chr == '}')
-                    ) {
-                        stack.pop();
-                    } else {
-                        return false;
-                    }
-                } else {
-                    stack.push(chr);
-                }
-
             }
+            maxRange = Math.max(maxRange, length);
+            result = Math.max(result, maxRange * height);
         }
-        return stack.isEmpty();
+        return result;
     }
 }
