@@ -78,7 +78,4 @@ local.properties
 Icon?
 ehthumbs.db
 Thumbs.db
-
-# 特殊需求
-#######
-presentation/src/main/assets/fonts/IconFont.ttf
+.vscode/

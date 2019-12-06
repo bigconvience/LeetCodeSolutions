@@ -1,21 +1,28 @@
 package com.jbp.stack;
 
-import java.util.HashSet;
+import java.util.Stack;
 
+/**
+ * https://leetcode.wang/leetCode-84-Largest-Rectangle-in-Histogram.html?h=rectangle
+ */
 public class LargestRectangle {
 
     public static void main(String[] args) {
         // write your code here
-        String a = "[[]]}";
         int[] height = {2, 1, 5, 6, 2, 3};
-        System.out.println(largestRectangleArea(height));
-
         int[] height1 = {1};
-        System.out.println(largestRectangleArea(height1));
 
+        System.out.println(largestRectangleArea1(height));
+        System.out.println(largestRectangleArea1(height1));
+
+        System.out.println(largestRectangleArea2(height));
+        System.out.println(largestRectangleArea2(height1));
+
+        System.out.println(largestRectangleArea3(height));
+        System.out.println(largestRectangleArea3(height1));
     }
 
-    public static int largestRectangleArea(int[] heights) {
+    public static int largestRectangleArea1(int[] heights) {
         if (heights == null || heights.length == 0) {
             return 0;
         }
@@ -52,6 +59,78 @@ public class LargestRectangle {
                 j++;
             }
         }
+        return maxArea;
+    }
+
+
+    public static int largestRectangleArea2(int[] heights) {
+        if (heights == null || heights.length == 0) {
+            return 0;
+        }
+
+        int[] leftLessMin = new int[heights.length];
+        int[] rightLessMin = new int[heights.length];
+
+        leftLessMin[0] = -1;
+        rightLessMin[heights.length - 1] = heights.length;
+
+        for (int i = 1; i < heights.length; i++) {
+            int p = i - 1;
+            while (p >= 0 && heights[p] >= heights[i]) {
+                p = leftLessMin[p];
+            }
+            leftLessMin[i] = p;
+        }
+
+        for (int i = heights.length - 2; i >=0; i--) {
+            int p = i + 1;
+            while (p < heights.length && heights[p] >= heights[i]) {
+                p = rightLessMin[p];
+            }
+            rightLessMin[i] = p;
+        }
+
+        int maxArea = 0;
+        for (int i = 0; i < heights.length; i++) {
+            int area = (rightLessMin[i] -  leftLessMin[i] - 1) * heights[i];
+            maxArea = Math.max(area, maxArea);
+        }
+        return maxArea;
+    }
+
+
+    public static int largestRectangleArea3(int[] heights) {
+        if (heights == null || heights.length == 0) {
+            return 0;
+        }
+        Stack<Integer> stack = new Stack<>();
+        int p = 0;
+        int maxArea = 0;
+        while (p < heights.length) {
+            if (stack.isEmpty()) {
+                stack.push(p++);
+            } else {
+                int top = stack.peek();
+                if (heights[p] >= heights[top]) {
+                    stack.push(p++);
+                } else {
+                    int height = heights[stack.pop()];
+                    int leftLessMin = stack.isEmpty() ? -1 : stack.peek();
+                    int rightLessMin = p;
+                    int area = (rightLessMin - leftLessMin - 1) * height;
+                    maxArea = Math.max(maxArea, area);
+                }
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            int top = stack.pop();
+            int leftLessMin = stack.isEmpty() ? -1 : stack.peek();
+            int rightLessMin = heights.length;
+            int area = (rightLessMin - leftLessMin - 1) * heights[top];
+            maxArea = Math.max(maxArea, area);
+        }
+
         return maxArea;
     }
 }
