@@ -33,7 +33,66 @@ public class PostOrderTraversal {
         System.out.println(postorder2(node1));
         System.out.println(postorder3(node1));
         System.out.println(postorder_3_1(node1));
+        System.out.println(postOrder_4_1(node1));
     }
+
+    public static List<Integer> postOrder_4_1(TreeNode root) {
+        LinkedList<Integer> ans = new LinkedList<>();
+        TreeNode cur = root;
+        while (cur != null) {
+            if (cur.left == null) {
+                cur = cur.right;
+            } else {
+                TreeNode prev = cur.left;
+                while (prev.right != null && prev.right != cur) {
+                    prev = prev.right;
+                }
+
+                if (prev.right == null) {
+                    prev.right = cur;
+                    cur = cur.left;
+                }
+
+                if (prev.right == cur) {
+                    prev.right = null;
+                    TreeNode head = reverseList(cur.left);
+                    revereList(head, ans);
+                    cur = cur.right;
+                }
+            }
+        }
+
+        TreeNode head = reverseList(root);
+        revereList(head, ans);
+        return ans;
+    }
+
+    private static void revereList(TreeNode head, List<Integer> ans) {
+        TreeNode cur = head;
+        TreeNode prev = null;
+        while (cur != null) {
+            ans.add(cur.val);
+            TreeNode tmp = cur.right;
+            cur.right = prev;
+            prev = cur;
+            cur = tmp;
+        }
+    }
+
+    private static TreeNode reverseList(TreeNode head) {
+        TreeNode tail = head;
+        head = head.right;
+        tail.right = null;
+        while (head != null) {
+            TreeNode tmp = head.right;
+            head.right = tail;
+            tail = head;
+            head = tmp;
+        }
+
+        return tail;
+    }
+
 
     public static List<Integer> postorder_3_1(TreeNode root) {
         LinkedList<Integer> ans = new LinkedList<>();
