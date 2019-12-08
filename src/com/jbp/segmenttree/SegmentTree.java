@@ -1,4 +1,4 @@
-package com.jbp.tree;
+package com.jbp.segmenttree;
 
 /**
  * 线段树学习

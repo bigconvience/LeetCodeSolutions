@@ -1,4 +1,4 @@
-package com.jbp.tree;
+package com.jbp.segmenttree;
 
 public class SegmentTreeTest {
     public static void main(String[] args) {
