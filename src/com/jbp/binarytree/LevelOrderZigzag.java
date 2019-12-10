@@ -3,12 +3,9 @@ package com.jbp.binarytree;
 import com.jbp.utils.ListUtils;
 import com.jbp.utils.TreeUtils;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
-public class LevelOrder {
+public class LevelOrderZigzag {
     public static void main(String[] args) {
         case1();
     }
@@ -30,6 +27,47 @@ public class LevelOrder {
 
         ListUtils.printListList((List) levelOrder_2_1(root));
         ListUtils.printListList((List) levelOrder_2_2(root));
+        ListUtils.printListList((List) levelOrder_3_1(root));
+    }
+
+    public static List<List<Integer>> levelOrder_3_1(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+
+        Stack<TreeNode> s1 = new Stack<>();
+        Stack<TreeNode> s2 = new Stack<>();
+        s1.push(root);
+        while (!s1.isEmpty() || !s2.isEmpty()) {
+            List<Integer> tmp = new ArrayList<>();
+            while (!s1.isEmpty()) {
+                TreeNode node = s1.pop();
+                if (node != null) {
+                    tmp.add(node.val);
+                    s2.push(node.left);
+                    s2.push(node.right);
+                }
+            }
+            if (!tmp.isEmpty()) {
+                ans.add(tmp);
+            }
+
+            tmp = new ArrayList<>();
+            while (!s2.isEmpty()) {
+                TreeNode node = s2.pop();
+                if (node != null) {
+                    tmp.add(node.val);
+                    s1.push(node.right);
+                    s1.push(node.left);
+                }
+            }
+            if (!tmp.isEmpty()) {
+                ans.add(tmp);
+            }
+        }
+
+        return ans;
     }
 
     public static List<List<Integer>> levelOrder_2_2(TreeNode root) {
@@ -40,17 +78,23 @@ public class LevelOrder {
 
         Queue<TreeNode> treeNode = new LinkedList<>();
         treeNode.add(root);
+        boolean leftToRight = true;
         while (!treeNode.isEmpty()) {
             int levelNum = treeNode.size();
             List<Integer> subList = new ArrayList<>();
             for (int i = 0; i < levelNum; i++) {
                 TreeNode cur = treeNode.poll();
                 if (cur != null) {
-                    subList.add(cur.val);
+                    if (leftToRight) {
+                        subList.add(cur.val);
+                    } else {
+                        subList.add(0, cur.val);
+                    }
                     treeNode.add(cur.left);
                     treeNode.add(cur.right);
                 }
             }
+            leftToRight = !leftToRight;
             if (subList.size() > 0) {
                 ans.add(subList);
             }
@@ -77,8 +121,11 @@ public class LevelOrder {
                     ans.add(new ArrayList<>());
                 }
 
-                ans.get(level).add(cur.val);
-
+                if (level % 2 == 0) {
+                    ans.get(level).add(cur.val);
+                } else {
+                    ans.get(level).add(0, cur.val);
+                }
                 treeNode.add(cur.left);
                 treeLevel.add(level + 1);
 
@@ -92,20 +139,24 @@ public class LevelOrder {
 
     public static List<List<Integer>> levelOrder_1_1(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
-        levelOrder(root, 1, ans);
+        dfs(root, 0, ans, true);
         return ans;
     }
 
-    public static void levelOrder(TreeNode node, int level, List<List<Integer>> ans) {
+    public static void dfs(TreeNode node, int level, List<List<Integer>> ans, boolean leftToRight) {
         if (node == null) {
             return;
         }
-        if (level > ans.size()) {
+        if (level >= ans.size()) {
             ans.add(new ArrayList<>());
         }
-        ans.get(level - 1).add(node.val);
-        levelOrder(node.left, level + 1, ans);
-        levelOrder(node.right, level + 1, ans);
+        if (level % 2 == 0) {
+            ans.get(level).add(node.val);
+        } else {
+            ans.get(level).add(0, node.val);
+        }
+        dfs(node.left, level + 1, ans, !leftToRight);
+        dfs(node.right, level + 1, ans, !leftToRight);
     }
 
 }

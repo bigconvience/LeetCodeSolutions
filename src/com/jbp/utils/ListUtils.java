@@ -14,18 +14,21 @@ public class ListUtils {
     }
 
     public static void printListList(List<List> list) {
-        System.out.println("[");
+        System.out.print("[");
         for (int i = 0; i < list.size(); i++) {
-            System.out.print(" ");
             printList(list.get(i));
         }
         System.out.println("]");
     }
     public static void printList(List list) {
         System.out.print("[");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i) + ",");
+        int listSize = list.size();
+        for (int i = 0; i < listSize; i++) {
+            System.out.print(list.get(i));
+            if (i < listSize - 1) {
+                System.out.print(',');
+            }
         }
-        System.out.println("]");
+        System.out.print("]");
     }
 }

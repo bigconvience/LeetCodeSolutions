@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class LevelOrder {
+public class LevelOrderBottomUp {
     public static void main(String[] args) {
         case1();
     }
@@ -52,7 +52,7 @@ public class LevelOrder {
                 }
             }
             if (subList.size() > 0) {
-                ans.add(subList);
+                ans.add(0, subList);
             }
         }
 
@@ -74,10 +74,10 @@ public class LevelOrder {
             int level = treeLevel.poll();
             if (cur != null) {
                 if (level >= ans.size()) {
-                    ans.add(new ArrayList<>());
+                    ans.add(0, new ArrayList<>());
                 }
 
-                ans.get(level).add(cur.val);
+                ans.get(ans.size() - 1- level).add(cur.val);
 
                 treeNode.add(cur.left);
                 treeLevel.add(level + 1);
@@ -92,20 +92,20 @@ public class LevelOrder {
 
     public static List<List<Integer>> levelOrder_1_1(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
-        levelOrder(root, 1, ans);
+        dfs(root, 0, ans);
         return ans;
     }
 
-    public static void levelOrder(TreeNode node, int level, List<List<Integer>> ans) {
+    public static void dfs(TreeNode node, int level, List<List<Integer>> ans) {
         if (node == null) {
             return;
         }
-        if (level > ans.size()) {
-            ans.add(new ArrayList<>());
+        if (level >= ans.size()) {
+            ans.add(0, new ArrayList<>());
         }
-        ans.get(level - 1).add(node.val);
-        levelOrder(node.left, level + 1, ans);
-        levelOrder(node.right, level + 1, ans);
+        ans.get(ans.size() - 1 - level).add(node.val);
+        dfs(node.left, level + 1, ans);
+        dfs(node.right, level + 1, ans);
     }
 
 }

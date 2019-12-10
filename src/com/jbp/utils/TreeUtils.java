@@ -1,4 +1,6 @@
-package com.jbp.binarytree;
+package com.jbp.utils;
+
+import com.jbp.binarytree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +17,12 @@ public class TreeUtils {
         }
         TreeNode node = input[index];
         int left = index * 2 + 1;
-        if (left < input.length) {
+        if (left < input.length && node != null) {
             node.left = buildTree(input, left);
         }
 
         int right = index * 2 + 2;
-        if (right < input.length) {
+        if (right < input.length && node != null) {
             node.right = buildTree(input, right);
         }
 
