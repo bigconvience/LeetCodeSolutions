@@ -1,6 +1,6 @@
 package com.jbp.utils;
 
-import com.leet.binarytree.TreeNode;
+import com.leetcode.binarytree.TreeNode;
 
 import java.util.List;
 
