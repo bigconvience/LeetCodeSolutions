@@ -1,7 +1,5 @@
 package com.jbp.utils;
 
-import java.util.Arrays;
-
 public class ArrayUtils {
     public static void print(int[] nums) {
         if (nums == null) {

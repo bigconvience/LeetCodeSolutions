@@ -1,8 +1,7 @@
 package com.jbp.utils;
 
-import com.jbp.binarytree.TreeNode;
+import com.leet.binarytree.TreeNode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TreeUtils {
