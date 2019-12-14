@@ -13,6 +13,6 @@ public class BSTUtils {
     }
 
     public static TreeNode generate(int n) {
-        return UniqueBSTII.generateTrees1(n).get(0);
+        return null;
     }
 }
