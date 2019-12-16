@@ -42,7 +42,9 @@ public class LIS {
         int n = s.length;
         int[] b = new int[n];
         int[] dp = new int[n];
-        dp[0] = 1;
+        for (int i = 0; i < s.length; i++) {
+            dp[i] = 1;
+        }
         b[0] = s[0];
         int len = 1;
 
