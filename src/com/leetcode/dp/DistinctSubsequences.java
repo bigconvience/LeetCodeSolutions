@@ -7,11 +7,11 @@ import java.util.Map;
  * Distinct Subsequences
  * https://leetcode.wang/leetcode-115-Distinct-Subsequences.html
  */
-public class Subsequences {
+public class DistinctSubsequences {
     public static void main(String[] args) {
-        new Subsequences().case3();
+        new DistinctSubsequences().case3();
 
-        new Subsequences().case2();
+        new DistinctSubsequences().case2();
     }
 
     /**
