@@ -21,6 +21,45 @@ public class Main {
         System.out.println(new Main().uniquePaths(grid2));
     }
 
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null ||
+                root.left == null && root.right == null) {
+            return true;
+        }
+
+        Queue<TreeNode> leftQ = new LinkedList<>();
+        Queue<TreeNode> rightQ = new LinkedList<>();
+        leftQ.offer(root.left);
+        rightQ.offer(root.right);
+
+        while (!leftQ.isEmpty() && !rightQ.isEmpty()) {
+            TreeNode left = leftQ.poll();
+            TreeNode right = rightQ.poll();
+
+            if (left.val != right.val) {
+                return false;
+            }
+
+            if (left.left != null && right.right != null) {
+                leftQ.offer(left.left);
+                rightQ.offer(right.right);
+            } else if (left.left != null && right.right == null
+                    || left.left == null && right.right != null) {
+                return false;
+            }
+
+            if (left.right != null && right.left != null) {
+                leftQ.offer(left.right);
+                rightQ.offer(right.left);
+            } else if (left.right != null && right.left == null
+                    || left.right == null && right.left != null) {
+                return false;
+            }
+        }
+
+        return leftQ.isEmpty() && rightQ.isEmpty();
+    }
+
     public static int uniquePaths(int[][] arr) {
         int m = arr.length;
         int n = arr[0].length;
@@ -32,20 +71,20 @@ public class Main {
         // 初始化
         dp[0][0] = arr[0][0];
         // 初始化最左边的列
-        for(int i = 1; i < m; i++){
-            dp[i][0] = dp[i-1][0] + arr[i][0];
+        for (int i = 1; i < m; i++) {
+            dp[i][0] = dp[i - 1][0] + arr[i][0];
         }
         // 初始化最上边的行
-        for(int i = 1; i < n; i++){
-            dp[0][i] = dp[0][i-1] + arr[0][i];
+        for (int i = 1; i < n; i++) {
+            dp[0][i] = dp[0][i - 1] + arr[0][i];
         }
         // 推导出 dp[m-1][n-1]
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
-                dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + arr[i][j];
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + arr[i][j];
             }
         }
-        return dp[m-1][n-1];
+        return dp[m - 1][n - 1];
     }
 
 
