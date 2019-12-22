@@ -2,11 +2,22 @@ package com.leetcode;
 
 import com.leetcode.binarytree.TreeNode;
 
+import javax.swing.plaf.IconUIResource;
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        String S = "rabbbit";
+        String T = "rabbit";
+        System.out.println(new Main().getNum(S, T));
+        System.out.println(new Main().getNum_dp(S, T));
+
+        if (true) {
+            return;
+        }
+
         System.out.println(new Main().uniquePaths(7, 3));
 
         int[][] grid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
@@ -19,6 +30,63 @@ public class Main {
         System.out.println(new Main().minPathSum(grid2));
 
         System.out.println(new Main().uniquePaths(grid2));
+    }
+
+    public int getNum_dp(String s, String t) {
+        if (s == null || t == null) {
+            return 0;
+        }
+
+        int m = s.length();
+        int n = t.length();
+        int[] dp = new int[n + 1];
+        dp[n] = 1;
+        int prev;
+        int temp;
+        for (int i = m - 1; i >=0; i--) {
+            temp = dp[n];
+            for (int j = n - 1; j >= 0; j--) {
+                prev = temp;
+                temp = dp[j];
+                if (s.charAt(i) == t.charAt(j)) {
+                    dp[j] = dp[j] + prev;
+                } else {
+                    dp[j] = dp[j];
+                }
+            }
+        }
+        return dp[0];
+    }
+
+
+    public int getNum(String s, String t) {
+        if (s == null || t == null) {
+            return 0;
+        }
+        return conquer(s, 0, t, 0);
+    }
+
+    Map<String, Integer> map = new HashMap<>();
+    public int conquer(String s, int sStart, String t, int tStart) {
+        if (t.length() == tStart) {
+            return 1;
+        }
+        if (s.length() == sStart) {
+            return 0;
+        }
+        String key = sStart + "@" + tStart;
+        if (map.containsKey(key)) {
+            return map.get(key);
+        }
+
+        int num;
+        if (s.charAt(sStart) == t.charAt(tStart)) {
+            num = conquer(s, sStart + 1, t, tStart + 1) + conquer(s, sStart + 1, t, tStart);
+        } else {
+            num =  conquer(s, sStart + 1, t, tStart);
+        }
+        map.put(key, num);
+        return num;
     }
 
     public boolean isSymmetric(TreeNode root) {
