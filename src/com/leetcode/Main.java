@@ -32,6 +32,18 @@ public class Main {
         System.out.println(new Main().uniquePaths(grid2));
     }
 
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        for (int sale = 0, buy = 0; sale < prices.length; sale++) {
+            if (prices[sale] >= prices[buy]) {
+                maxProfit = Math.max(prices[sale] - prices[buy], maxProfit);
+            } else {
+                buy = sale;
+            }
+        }
+        return maxProfit;
+    }
+
     public int getNum_dp(String s, String t) {
         if (s == null || t == null) {
             return 0;
