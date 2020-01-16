@@ -1,8 +1,6 @@
 package com.glorist.backtrace;
 
-import com.introduction.dp.Matrix;
-
-public class Backtrace {
+public class BacktraceSet {
 
 
     class data {
@@ -22,7 +20,7 @@ public class Backtrace {
     }
 
     public static void main(String[] args) {
-        new Backtrace().generate_subsets(3);
+        new BacktraceSet().generate_subsets(3);
     }
 
     private static final int NMAX = 100;

@@ -1,7 +1,6 @@
-package com.g4g;
+package com.g4g.graph;
 // Java program to print BFS traversal from a given source vertex.
 // BFS(int s) traverses vertices reachable from s.
-import java.io.*;
 import java.util.*;
 
 // This class represents a directed graph using adjacency list

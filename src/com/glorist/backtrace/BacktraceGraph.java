@@ -1,6 +1,6 @@
 package com.glorist.backtrace;
 
-public class BacktracePerm {
+public class BacktraceGraph {
 
 
     class data {
@@ -19,13 +19,33 @@ public class BacktracePerm {
         }
     }
 
+    class edgenode {
+        int y;
+        edgenode next;
+
+        public edgenode(int val, edgenode next) {
+            this.y = val;
+            this.next = next;
+        }
+    }
+
+    class graph {
+        edgenode[] edges;
+
+        public graph(edgenode[] edges) {
+            this.edges = edges;
+        }
+    }
+
     public static void main(String[] args) {
-        new BacktracePerm().generate_subsets(3);
+        new BacktraceGraph().generate_subsets(3);
     }
 
     private static final int NMAX = 100;
     private static final int MAXCANDIDATES = 100;
-    boolean finished = false;                  /* found all solutions yet? */
+    private boolean finished = false;                  /* found all solutions yet? */
+    private int solution_count = 0;
+    private graph g;
 
     private void generate_subsets(int n) {
         int[] a = new int[NMAX];
@@ -37,7 +57,7 @@ public class BacktracePerm {
         ncandidats ncandidates = new ncandidats(0);                /* next position candidate count */
         int i;                          /* counter */
 
-        if (is_a_solution(a, k, input))
+        if (is_a_solution(a, k, input.n))
             process_solution(a, k, input);
         else {
             k = k + 1;
@@ -54,28 +74,34 @@ public class BacktracePerm {
         }
     }
 
-    private boolean is_a_solution(int a[], int k, data input) {
-        return k == input.n;
+    private boolean is_a_solution(int a[], int k, int t) {
+        return a[k] == t;
     }
 
     private void process_solution(int a[], int k, data input) {
-        System.out.print("{");
-        for (int i = 1; i <= k; i++) {
-            System.out.print(a[i] + " ");
-        }
-        System.out.println("}");
+        solution_count++;
     }
 
     private void construct_candidates(int a[], int k, data input, int[] c, ncandidats ncandidates) {
-        boolean[] in_perm = new boolean[NMAX];
-        for (int i = 1; i < k; i++) {
-            in_perm[a[i]] = true;
+        boolean[] in_sol = new boolean[NMAX];
+        for (int i = 0; i < k; i++) {
+            in_sol[a[i]] = true;
         }
+        int last;
+        edgenode p;
 
-        ncandidates.n = 0;
-        for (int i = 1; i <= input.n; i++) {
-            if (!in_perm[i]) {
-                c[ncandidates.n++] = i;
+        if (k == 1) {
+            c[0] = 1;
+            ncandidates.n = 1;
+        } else {
+            ncandidates.n = 0;
+            last = a[k - 1];
+            p = g.edges[last];
+            while (p != null) {
+                if (!in_sol[p.y]) {
+                    c[ncandidates.n++] = p.y;
+                }
+                p = p.next;
             }
         }
     }

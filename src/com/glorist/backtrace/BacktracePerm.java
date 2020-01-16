@@ -1,6 +1,6 @@
 package com.glorist.backtrace;
 
-public class BacktraceSet {
+public class BacktracePerm {
 
 
     class data {
@@ -20,7 +20,7 @@ public class BacktraceSet {
     }
 
     public static void main(String[] args) {
-        new BacktraceSet().generate_subsets(3);
+        new BacktracePerm().generate_subsets(3);
     }
 
     private static final int NMAX = 100;
@@ -61,17 +61,23 @@ public class BacktraceSet {
     private void process_solution(int a[], int k, data input) {
         System.out.print("{");
         for (int i = 1; i <= k; i++) {
-            if (a[i] == 1) {
-                System.out.print(i + " ");
-            }
+            System.out.print(a[i] + " ");
         }
         System.out.println("}");
     }
 
     private void construct_candidates(int a[], int k, data input, int[] c, ncandidats ncandidates) {
-        c[0] = 1;
-        c[1] = 0;
-        ncandidates.n = 2;
+        boolean[] in_perm = new boolean[NMAX];
+        for (int i = 1; i < k; i++) {
+            in_perm[a[i]] = true;
+        }
+
+        ncandidates.n = 0;
+        for (int i = 1; i <= input.n; i++) {
+            if (!in_perm[i]) {
+                c[ncandidates.n++] = i;
+            }
+        }
     }
 
     private void make_move(int a[], int k, data input) {
